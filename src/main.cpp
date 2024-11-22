@@ -1,8 +1,16 @@
-#include <iostream>
+#include <bits/stdc++.h>
 
-int main(int argc, char **argv)
+#include "iterator-types.h"
+using namespace std;
+
+int
+main(int argc, char** argv)
 {
 
-  cout << "iterator implementation test...." << endl;
+  vector<int> iv = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+  auto value = xns::distance(iv.begin(), iv.end());
+
+  cout << "distance between iterator: " << value << endl;
   return 0;
 }
