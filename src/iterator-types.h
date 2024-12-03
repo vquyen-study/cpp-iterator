@@ -70,39 +70,6 @@ __iterator_category(const _iterator&)
 }
 ///@} end
 
-///@{ begin  implement the distance oepration for iterator.
 
-template<typename _input_iterator>
-inline typename iterator_traits<_input_iterator>::difference_type
-__distance(_input_iterator __first, _input_iterator __last, input_iterator_tag)
-{
-  typename iterator_traits<_input_iterator>::difference_type __n = 0;
-  while (__first != __last) {
-    ++__first;
-    ++__n;
-  }
-  return __n;
-}
-
-template<typename _random_access_iterator>
-inline typename iterator_traits<_random_access_iterator>::difference_type
-__distance(_random_access_iterator __first,
-           _random_access_iterator __last,
-           random_access_iterator_tag)
-{
-  return __last - __first;
-}
-
-template<typename _iterator_type>
-inline typename iterator_traits<_iterator_type>::difference_type
-distance(_iterator_type __first, _iterator_type __last)
-{
-  return __distance(__first, __last, xns::__iterator_category(__first));
-}
-/// @} end
-
-/// @{ begin implement the advance operation for iterator.
-
-/// @}
 }
 #endif /* _STL_ITERATOR_BASE_TYPES_H */
