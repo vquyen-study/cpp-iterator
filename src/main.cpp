@@ -1,16 +1,37 @@
 #include <bits/stdc++.h>
 
-#include "iterator-types.h"
+#include <array>
+
+#include "fixed_array.hpp"
+#include "iterator-types.hpp"
+
 using namespace std;
 
 int
 main(int argc, char** argv)
 {
 
-  vector<int> iv = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  fixed_array<int, 20> my_arr;
 
-  auto value = xns::distance(iv.begin(), iv.end());
+  my_arr.print_items();
 
-  cout << "distance between iterator: " << value << endl;
+  cout << "Leng : " << xns::distance(my_arr.begin(), my_arr.end()) << endl;
+
+  for (auto it = my_arr.begin(); it != my_arr.end(); ++it) {
+    cout << *it << ",, ";
+  }
+
+  cout << endl;
+
+  auto first = my_arr.begin();
+
+  auto end = my_arr.end();
+
+  cout << "while oloop---------------__> \n";
+  while (first != end) {
+    cout << *first << ", ";
+    ++first;
+  }
+
   return 0;
 }
