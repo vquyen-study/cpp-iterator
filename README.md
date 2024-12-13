@@ -1,1 +1,3 @@
 # cpp-iterator
+https://batrinh@dev.azure.com/batrinh/SmSApplication/_git/SmSApplication
+GEs17m5IEiYCmhFYlSepDEbdgVrwssT3lE9qJr4eBpyKEgaAxvE4JQQJ99ALACAAAAAa4XpFAAASAZDONS7c

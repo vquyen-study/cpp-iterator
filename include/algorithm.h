@@ -19,14 +19,15 @@ namespace xns {
 */
 template<typename _InputIterator, typename _Tp>
 inline typename iterator_traits<_InputIterator>::difference_type
-count(_InputIterator __first, _InputIterator __last, const _Tp& __value)
-{
-    typename iterator_traits<_InputIterator>::difference_type __n = 0;
-    for (; __first != __last; ++__first)
-        if (__pred(__first))
-            ++__n;
-    return __n;
-}
+    count(_InputIterator __first, _InputIterator __last, const _Tp& __value)
+    {
+        typename iterator_traits<_InputIterator>::difference_type __n = 0;
+        auto __pred = __gnu_cxx::__ops::__iter_equals_val(__value);
+        for (; __first != __last; ++__first)
+            if (__pred(__first))
+                ++__n;
+        return __n;
+    }
 
 }
 
