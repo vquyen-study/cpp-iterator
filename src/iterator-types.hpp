@@ -1,3 +1,4 @@
+#include <system_error>
 #ifndef _ITERATOR_BASE_TYPES_H
 #define _ITERATOR_BASE_TYPES_H 1
 
@@ -77,14 +78,23 @@ public:
 
   iterator(_Pointer val)
     : _val{ val }
-  {
-  }
+  {}
 
   bool operator!=(const iterator& b) const { return this->_val != b._val; }
+
+  bool operator==(const iterator& b) const { return !operator!=(b); }
+
+  bool operator<(const iterator& b) const { return this->_val < b._val; }
 
   iterator& operator++()
   {
     ++_val;
+    return *this;
+  }
+
+  iterator& operator--()
+  {
+    --_val;
     return *this;
   }
 
@@ -93,6 +103,10 @@ public:
   {
     return this->_val - rhs._val;
   }
+  iterator operator-(int n) const { return this->_val - n; }
+
+  // implement the difference operator.
+  iterator operator+(int n) const { return this->_val + n; }
 
   value_type& operator*() { return *(this->_val); }
 
@@ -111,7 +125,7 @@ inline typename iterator_traits<_input_iterator>::difference_type
 __distance(_input_iterator __first, _input_iterator __last, input_iterator_tag)
 {
   typename iterator_traits<_input_iterator>::difference_type __n = 0;
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  // std::cout << __PRETTY_FUNCTION__ << std::endl;
   while (__first != __last) {
     ++__first;
     ++__n;

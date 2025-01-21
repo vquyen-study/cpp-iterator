@@ -31,6 +31,7 @@ public:
     std::cout << std::endl;
   }
 
+  int get_size() const { return size; }
   iterator begin() { return arr.begin(); }
   iterator end() { return arr.end(); }
 };

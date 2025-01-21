@@ -1,9 +1,13 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 
 #include <array>
+#include <sstream>
+#include <string>
 
 #include "fixed_array.hpp"
 #include "iterator-types.hpp"
+#include "stream_iterator.hpp"
 
 using namespace std;
 
@@ -13,25 +17,77 @@ main(int argc, char** argv)
 
   fixed_array<int, 20> my_arr;
 
+  cout << endl;
+  cout << endl;
+  cout << endl;
+
+  cout << "Print initailzed fixed_array: " << endl;
   my_arr.print_items();
 
-  cout << "Leng : " << xns::distance(my_arr.begin(), my_arr.end()) << endl;
+  cout << "\nLeng : " << xns::distance(my_arr.begin(), my_arr.end()) << endl;
 
+  cout << "\n Dereference accessing... " << endl;
   for (auto it = my_arr.begin(); it != my_arr.end(); ++it) {
-    cout << *it << ",, ";
+    cout << *it << "...";
   }
 
   cout << endl;
 
+  cout << "Algorithm checking.... \n";
+
   auto first = my_arr.begin();
-
   auto end = my_arr.end();
+  int count = 0;
 
-  cout << "while oloop---------------__> \n";
   while (first != end) {
-    cout << *first << ", ";
+    *first = 2;
+    count++;
+    if (count > 5) {
+      break;
+    }
     ++first;
   }
 
+  count = std::count(my_arr.begin(), my_arr.end(), 2);
+  cout << "\nCount algorithm std::count: " << count << endl;
+
+  count =
+    std::count_if(my_arr.begin(), my_arr.end(), [](int x) { return x == 2; });
+  cout << "\nCount algorithm std::count_if: " << count << endl;
+
+  cout << "\nfor std::copy : \n";
+  vector<int> vec(my_arr.get_size(), 0);
+  std::copy(my_arr.begin(), my_arr.end(), vec.begin());
+
+  cout << "Vector is copied from fixed_array : ";
+  for (auto& x : vec) {
+    cout << x << ", ";
+  }
+  cout << endl;
+
+  cout << "\nSorted array : ";
+  sort(my_arr.begin(), my_arr.end(), greater<int>());
+  for (auto& x : my_arr) {
+    cout << x << ", ";
+  }
+  cout << endl;
+
+  // istream_iterator test
+  cout << "\nistream_iterator test :\n";
+  string st("R.Rorty");
+
+  string re_01, re_02, re_03;
+  re_02 = ",H.Putnam";
+  re_03 = "D.Dennett,xxx,H.Putnam";
+
+  stringbuf sb_01(st);
+  istream is_01(&sb_01);
+  xns::istream_iterator<char> inb_01(is_01);
+  xns::istream_iterator<char> ine_01;
+  re_01.assign(inb_01, ine_01);
+
+  cout << endl;
+  cout << endl;
+  cout << endl;
   return 0;
 }
