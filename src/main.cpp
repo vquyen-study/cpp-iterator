@@ -64,7 +64,6 @@ main(int argc, char** argv)
     cout << x << ", ";
   }
   cout << endl;
-
   cout << "\nSorted array : ";
   sort(my_arr.begin(), my_arr.end(), greater<int>());
   for (auto& x : my_arr) {
@@ -82,12 +81,33 @@ main(int argc, char** argv)
 
   stringbuf sb_01(st);
   istream is_01(&sb_01);
+  // xns::istream_iterator<char> inb_01;
   xns::istream_iterator<char> inb_01(is_01);
   xns::istream_iterator<char> ine_01;
-  re_01.assign(inb_01, ine_01);
+  // re_01.assign(inb_01, ine_01);
+
+  istringstream ss("1 2 3 4 5");
+  xns::istream_iterator<int> iter(ss), end1;
+  while (iter != end1)
+    cout << *iter++;
 
   cout << endl;
   cout << endl;
   cout << endl;
+
+  std::istringstream str("0.1 0.2 0.3 0.4");
+  std::partial_sum(xns::istream_iterator<double>(str),
+                   xns::istream_iterator<double>(),
+                   std::ostream_iterator<double>(std::cout, " "));
+
+  std::istringstream str2("1 3 5 7 8 9 10");
+  auto it = std::find_if(xns::istream_iterator<int>(str2),
+                         xns::istream_iterator<int>(),
+                         [](int i) { return i % 2 == 0; });
+
+  cout << "\n The first even number is : " << str2.str() << " is ====> ";
+  if (it != xns::istream_iterator<int>())
+    std::cout << *it << ".\n";
+
   return 0;
 }

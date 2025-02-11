@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <istream>
 #include <string>
+#include <system_error>
 
 #include "iterator-types.hpp"
 
@@ -17,6 +18,8 @@ class istream_iterator
 public:
   /// One of the @link iterator_tags tag types@endlink.
   typedef input_iterator_tag iterator_category;
+  // typedef std::input_iterator_tag iterator_category;
+
   /// The type "pointed to" by the iterator.
   typedef _Tp value_type;
   /// Distance between iterators is represented as this type.
@@ -43,11 +46,19 @@ public:
     , _m_ok(__s._m_ok)
   {}
 
-  istream_iterator(std::istream& __s)
-    : _m_stream(__s._m_stream)
-    , _m_value(__s._m_value)
-    , _m_ok(__s._m_ok)
-  {}
+  ///  Construct start of input stream iterator.
+  istream_iterator(istream_type& __s)
+    : _m_stream(std::addressof(__s))
+    , _m_ok(true)
+  {
+    _m_read();
+  }
+
+  // istream_iterator(std::istream& __s)
+  //   : _m_stream(__s._m_stream)
+  //   , _m_value(__s._m_value)
+  //   , _m_ok(__s._m_ok)
+  // {}
 
   istream_iterator(const istream_iterator& __s)
     : _m_stream(__s._m_stream)
@@ -75,6 +86,11 @@ public:
     return _x._m_equal(_y);
   }
 
+  friend bool operator!=(const istream_iterator& _x, const istream_iterator& _y)
+  {
+    return !_x._m_equal(_y);
+  }
+
 private:
   istream_type* _m_stream;
   _Tp _m_value;
@@ -93,6 +109,21 @@ private:
     return _m_ok == _x._m_ok && (!_m_ok || _m_stream == _x._m_stream);
   }
 };
+
+template<typename _InputIterator, typename _Predicate>
+_GLIBCXX20_CONSTEXPR inline _InputIterator
+__find_if(_InputIterator __first,
+          _InputIterator __last,
+          _Predicate __pred,
+          input_iterator_tag)
+{
+  while (__first != __last && !__pred(__first))
+    ++__first;
+  return __first;
 }
+}
+
+
+
 
 #endif // __XNS_STREAM_ITERATOR__
