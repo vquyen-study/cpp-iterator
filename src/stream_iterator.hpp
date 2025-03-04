@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <istream>
+#include <ostream>
 #include <string>
 #include <system_error>
 
@@ -38,13 +39,15 @@ public:
     : _m_stream{ 0 }
     , _m_value{}
     , _m_ok{ false }
-  {}
+  {
+  }
 
   istream_iterator(istream_iterator& __s)
     : _m_stream(__s._m_stream)
     , _m_value(__s._m_value)
     , _m_ok(__s._m_ok)
-  {}
+  {
+  }
 
   ///  Construct start of input stream iterator.
   istream_iterator(istream_type& __s)
@@ -54,19 +57,16 @@ public:
     _m_read();
   }
 
-  // istream_iterator(std::istream& __s)
-  //   : _m_stream(__s._m_stream)
-  //   , _m_value(__s._m_value)
-  //   , _m_ok(__s._m_ok)
-  // {}
-
   istream_iterator(const istream_iterator& __s)
     : _m_stream(__s._m_stream)
     , _m_value(__s._m_value)
     , _m_ok(__s._m_ok)
-  {}
+  {
+  }
 
   const _Tp& operator*() const { return _m_value; }
+
+  const _Tp* operator->() const { return std::__addressof((operator*())); }
 
   istream_iterator& operator++()
   {
@@ -110,6 +110,50 @@ private:
   }
 };
 
+template<typename _Tp,
+         typename _CharT = char,
+         typename _Traits = std::char_traits<_CharT>,
+         typename _Dist = ptrdiff_t>
+class ostream_iterator
+{
+public:
+  typedef _Tp value_type;
+  typedef _Dist difference_type;
+  typedef const _Tp* pointer;
+  typedef const _Tp& reference;
+
+  typedef _CharT char_type;
+  typedef _Traits traits_type;
+  typedef std::basic_ostream<char_type, traits_type> ostream_type;
+
+  ostream_iterator(ostream_type& in_os, char_type in_delimiter)
+    : os(in_os)
+    , delimiter(in_delimiter)
+  {
+  }
+
+  ostream_iterator& operator=(const ostream_iterator& val)
+  {
+    os = val.os;
+    delimiter = val.delimiter;
+    return *this;
+  }
+
+  ostream_iterator& operator=(const value_type& val)
+  {
+    os << val << delimiter;
+    return *this;
+  }
+
+  ostream_iterator& operator*() { return *this; }
+  ostream_iterator& operator++() { return *this; }
+  ostream_iterator& operator++(int) { return *this; }
+
+private:
+  ostream_type& os;
+  char_type delimiter;
+};
+
 template<typename _InputIterator, typename _Predicate>
 _GLIBCXX20_CONSTEXPR inline _InputIterator
 __find_if(_InputIterator __first,
@@ -122,8 +166,5 @@ __find_if(_InputIterator __first,
   return __first;
 }
 }
-
-
-
 
 #endif // __XNS_STREAM_ITERATOR__

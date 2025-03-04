@@ -71,18 +71,6 @@ main(int argc, char** argv)
   }
   cout << endl;
 
-  // istream_iterator test
-  // cout << "\nistream_iterator test :\n";
-  // string st("R.Rorty");
-
-  // string re_01, re_02, re_03;
-  // re_02 = ",H.Putnam";
-  // re_03 = "D.Dennett,xxx,H.Putnam";
-
-  cout << endl;
-  cout << endl;
-  cout << endl;
-
   std::istringstream str("0.1 0.2 0.3 0.4");
   std::partial_sum(xns::istream_iterator<double>(str),
                    xns::istream_iterator<double>(),
@@ -96,6 +84,17 @@ main(int argc, char** argv)
   cout << "\n The first even number is : " << str2.str() << " is ====> ";
   if (it != xns::istream_iterator<int>())
     std::cout << *it << ".\n";
+
+  auto itout = xns::ostream_iterator<int>(std::cout, '\n');
+
+  itout = 22;
+
+  *itout = 33;
+  *itout++ = 33;
+  *itout++ = 33;
+
+  *itout = 22.2;
+  *itout = 0.00003;
 
   return 0;
 }
