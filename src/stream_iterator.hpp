@@ -123,7 +123,4 @@ __find_if(_InputIterator __first,
 }
 }
 
-
-
-
 #endif // __XNS_STREAM_ITERATOR__

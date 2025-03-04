@@ -72,24 +72,25 @@ main(int argc, char** argv)
   cout << endl;
 
   // istream_iterator test
-  cout << "\nistream_iterator test :\n";
-  string st("R.Rorty");
+  // cout << "\nistream_iterator test :\n";
+  // string st("R.Rorty");
 
-  string re_01, re_02, re_03;
-  re_02 = ",H.Putnam";
-  re_03 = "D.Dennett,xxx,H.Putnam";
+  // string re_01, re_02, re_03;
+  // re_02 = ",H.Putnam";
+  // re_03 = "D.Dennett,xxx,H.Putnam";
 
-  stringbuf sb_01(st);
-  istream is_01(&sb_01);
-  // xns::istream_iterator<char> inb_01;
-  xns::istream_iterator<char> inb_01(is_01);
-  xns::istream_iterator<char> ine_01;
-  // re_01.assign(inb_01, ine_01);
+  // stringbuf sb_01(st);
+  // istream is_01(&sb_01);
+  // // xns::istream_iterator<char> inb_01;
+  // xns::istream_iterator<char> inb_01(is_01);
+  // xns::istream_iterator<char> ine_01;
+  // // re_01.assign(inb_01, ine_01);
 
   istringstream ss("1 2 3 4 5");
   xns::istream_iterator<int> iter(ss), end1;
+  cout << "\nistream_iterator test :" << ss.str() << " is :    ";
   while (iter != end1)
-    cout << *iter++;
+    cout << *iter++ << ", ";
 
   cout << endl;
   cout << endl;
